@@ -1,8 +1,10 @@
 <template>
-    <v-col class="pr-3 pb-5" lg="3" sm="6"  md="4">
+    <v-col class="pr-3 pb-5" lg="4" sm="6"  md="4">
         <v-card shaped>
             <v-card-title class="green draken-4 white--text headline">
-                <strong>{{stock.name}} </strong><small class="caption">{{stock.price}}</small>
+                <strong>{{stock.name}} 
+                    <small class="">(Preço: {{stock.price}})</small>
+                </strong>
             </v-card-title>
             <v-card-text class="">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -33,7 +35,7 @@ export default {
                 stockPrice: this.stock.price,
                 quantity: this.quantity
             }
-            console.log(order)
+            this.$store.dispatch('buyStock', order)
             this.quantity = 0
         }
     }

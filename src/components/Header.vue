@@ -26,6 +26,9 @@
                         </v-list-item>
                     </v-list>
                     </v-menu>
+                    <div class="d-flex justify-center align-center">
+                        <span>Saldo: {{funds}}</span>
+                    </div>
             </v-toolbar-items>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer">
@@ -58,6 +61,11 @@ export default {
         { title: 'Salvar Dados' },
         { title: 'Carregar Dados' },
       ]
-    })
+    }),
+    computed:{
+        funds(){
+            return this.$store.getters.funds
+        }
+    }
 }
 </script>
