@@ -10,7 +10,7 @@
             <span class="text-capitalize white--text">Clique em 'finalizar o dia' para iniciar um novo dia</span>
         </v-sheet>
         <v-divider class="my-4"/>
-        <p class="text-h4"><strong>Seu Saldo:</strong> {{funds}}</p>
+        <p class="text-h4"><strong>Seu Saldo:</strong> {{funds | currency}}</p>
     </div>
 </template>
 

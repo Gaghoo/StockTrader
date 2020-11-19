@@ -27,7 +27,7 @@
                     </v-list>
                     </v-menu>
                     <div class="d-flex justify-center align-center">
-                        <span>Saldo: {{funds}}</span>
+                        <span>Saldo: {{funds | currency}}</span>
                     </div>
             </v-toolbar-items>
         </v-app-bar>

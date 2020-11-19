@@ -3,18 +3,29 @@
         <v-card shaped>
             <v-card-title class="green draken-4 white--text headline">
                 <strong>{{stock.name}} 
-                    <small class="">(Preço: {{stock.price}})</small>
+                    <small class="">(Preço: {{stock.price | currency}})</small>
                 </strong>
             </v-card-title>
             <v-card-text class="">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </v-card-text>
             <v-card-actions>
-                <v-text-field label="Comprar ação" type="number" color="green draken-4" v-model.number="quantity"/>
-                <v-btn rounded class="mx-2" text color="green draken-4" small 
-                    @click="buyStock" :disabled="quantity <=0 || !Number.isInteger(quantity)">
+                <v-text-field
+                    label="Comprar ação"
+                    type="number"
+                    color="green draken-4"
+                    v-model.number="quantity"
+                    :error="insufficientFunds || quantity < 0 || !Number.isInteger(quantity)"
+                />
+                <v-btn 
+                    rounded class="mx-2" 
+                    text color="green draken-4" 
+                    small 
+                    @click="buyStock" 
+                    :disabled="insufficientFunds || quantity <=0 || !Number.isInteger(quantity)"
+                >
                     <v-icon>mdi-login-variant</v-icon>
-                    <span>comprar</span>
+                    <span>{{insufficientFunds ? 'Insuficiente' : 'Comprar'}}</span>
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -37,6 +48,14 @@ export default {
             }
             this.$store.dispatch('buyStock', order)
             this.quantity = 0
+        }
+    },
+    computed:{
+        funds(){
+            return this.$store.getters.funds
+        },
+        insufficientFunds(){
+            return this.quantity * this.stock.price > this.funds
         }
     }
 }

@@ -4,7 +4,7 @@
             <v-card-title class="blue draken-4 white--text headline">
                 <strong>{{stock.name}} 
                     <small class="overline">
-                        (Preço: {{stock.price}} | Qtde: {{stock.quantity}})
+                        (Preço: {{stock.price | currency}} | Qtde: {{stock.quantity}})
                         </small>
                 </strong>
             </v-card-title>
@@ -12,9 +12,22 @@
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </v-card-text>
             <v-card-actions>
-                <v-text-field label="Comprar ação" type="number" color="blue draken-4" v-model.number="quantity"/>
-                <v-btn rounded class="mx-2" text color="blue draken-4" small 
-                    @click="sellStock" :disabled="quantity <=0 || !Number.isInteger(quantity)">
+                <v-text-field 
+                    label="Comprar ação" 
+                    type="number" 
+                    color="blue draken-4" 
+                    v-model.number="quantity"
+                    :error="insufficientQuantity || quantity < 0 || !Number.isInteger(quantity)"
+                    v-on:keyup.enter="sellStock"
+                />
+                <v-btn 
+                    rounded class="mx-2" 
+                    text 
+                    color="blue draken-4" 
+                    small 
+                    @click="sellStock" 
+                    :disabled="insufficientQuantity || quantity <=0 || !Number.isInteger(quantity)"
+                >
                     <v-icon>mdi-logout-variant</v-icon>
                     <span class="">vender</span>
                 </v-btn>
@@ -39,6 +52,11 @@ export default {
             }
             this.$store.dispatch('sellStock', order)
             this.quantity = 0
+        }
+    },
+    computed:{
+        insufficientQuantity(){
+            return this.quantity > this.stock.quantity
         }
     }
 }
