@@ -3,12 +3,12 @@
         <v-app-bar app>
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <span class="font-weight-thin">Stock </span>
-                <span>Trade</span>
+                <span class="vaiDaErrado font-weight-thin">Stock</span>
+                <span class="vaiDaErrado vaiDaCerto">Trade</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
-                <v-btn text>
+                <v-btn text @click="endDay">
                     Finalizar Dia
                 </v-btn>
                 <v-menu offset-y>
@@ -48,6 +48,7 @@
 
 
 <script>
+import {mapActions} from 'vuex'
 export default {
     data: () => ({
         drawer: false,
@@ -66,6 +67,28 @@ export default {
         funds(){
             return this.$store.getters.funds
         }
+    },
+    methods:{
+        ...mapActions(['randomizeStocks']),
+        endDay(){
+            this.randomizeStocks()
+        }
     }
 }
 </script>
+
+
+<style lang="scss" scoped>
+nav{
+    header{
+        .v-toolbar__title{
+            .vaiDaErrado{
+                font-family: 'Courier New', Courier, monospace;
+            }
+            .vaiDaCerto{
+                font-weight: 800;
+            }
+        }
+    }
+}
+</style>

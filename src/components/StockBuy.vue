@@ -16,6 +16,7 @@
                     color="green draken-4"
                     v-model.number="quantity"
                     :error="insufficientFunds || quantity < 0 || !Number.isInteger(quantity)"
+                    v-on:keyup.enter="buyStock"
                 />
                 <v-btn 
                     rounded class="mx-2" 
